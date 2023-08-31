@@ -1,0 +1,18 @@
+Features
+
+* Time speed up and slow down
+* Labels for textfields
+* Button to toggle guidelines
+* Info screen
+* Error popup for non-numeric textfield input
+* Add variable mass for double pendulums, currently all 100 (kg?)
+
+Fixes
+
+* Height constant for textfield
+* Textfield overflow
+* Crash on no conversion for textfields
+
+Misc
+
+* Credit Afqotunnajah (length), Royyan Wijaya (angle), Radhe Icon (clear), srip (add)
