@@ -7,17 +7,10 @@ void Simulation::draw_all() {
         p.draw(wndw);
     wndw.draw(pivot);
     wndw.draw(toolbar);
-    wndw.draw(pause_btn.get_sprt());
-    wndw.draw(add_pendulum_btn.get_bounds());
-    wndw.draw(add_pendulum_btn.get_sprt());
-    wndw.draw(clear_btn.get_bounds());
-    wndw.draw(clear_btn.get_sprt());
-    angle1_tf.draw(wndw);
-    leng1_tf.draw(wndw);
-    mass1_tf.draw(wndw);
-    angle2_tf.draw(wndw);
-    leng2_tf.draw(wndw);
-    mass2_tf.draw(wndw);
+    for(const Button * const btn : buttons)
+        btn->draw(wndw);
+    for(const TextField & tf : textfields)
+        tf.draw(wndw);
 }
 
 void Simulation::create_guidelines() {
@@ -36,27 +29,18 @@ void Simulation::create_guidelines() {
 
 void Simulation::handle_click(sf::Event & event) {
     if(event.mouseButton.button == sf::Mouse::Left) {
-        float x = event.mouseButton.x;
-        float y = event.mouseButton.y;
-        pause_btn.query_click(x, y);
-        add_pendulum_btn.query_click(x, y);
-        clear_btn.query_click(x, y);
-        angle1_tf.query_click(x, y);
-        leng1_tf.query_click(x, y);
-        mass1_tf.query_click(x, y);
-        angle2_tf.query_click(x, y);
-        leng2_tf.query_click(x, y);
-        mass2_tf.query_click(x, y);
+        int x = event.mouseButton.x;
+        int y = event.mouseButton.y;
+        for(Button * button : buttons)
+            button->query_click(x, y);
+        for(TextField & tf : textfields)
+            tf.query_click(x, y);
     }
 }
 
 void Simulation::handle_text_enter(sf::Event & event) {
-    angle1_tf.text_entered(event);
-    leng1_tf.text_entered(event);
-    mass1_tf.text_entered(event);
-    angle2_tf.text_entered(event);
-    leng2_tf.text_entered(event);
-    mass2_tf.text_entered(event);
+    for(TextField & tf : textfields)
+        tf.text_entered(event);
 }
 
 Simulation::Simulation() :
@@ -78,8 +62,8 @@ Simulation::Simulation() :
         float leng;
         float theta;
         try {
-            leng = std::stof(leng1_tf.get_content());
-            theta = deg_to_rad(std::stof(angle1_tf.get_content()));
+            leng = std::stof(textfields.at(0).get_content());
+            theta = deg_to_rad(std::stof(textfields.at(2).get_content()));
         }
         catch(std::invalid_argument & ia) {
             return;
@@ -90,19 +74,22 @@ Simulation::Simulation() :
               BUTTON_H, BUTTON_H,
               [&]() {pendulums.clear();},
               rm.get("clear.png")),
-    angle1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
-    leng1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 30, 25, rm),
-    mass1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 60, 25, rm),
-    angle2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
-    leng2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 30, 25, rm),
-    mass2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 60, 25, rm),
-    toolbar({WNDW_W, TOOLBAR_H})
+//    angle1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
+//    leng1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 30, 25, rm),
+//    mass1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 60, 25, rm),
+//    angle2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
+//    leng2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 30, 25, rm),
+//    mass2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 60, 25, rm),
+    toolbar({WNDW_W, TOOLBAR_H}),
+    buttons({&pause_btn, &clear_btn, &add_pendulum_btn})
 {
     wndw.setFramerateLimit(FRAMERATE);
     toolbar.setPosition(0, WNDW_H - TOOLBAR_H);
     toolbar.setFillColor(TOOLBAR_CLR);
-    for(int i = 0; i <= 2; ++i)
+    for(int i = 0; i < 3; ++i)
         pendulums.emplace_back(i * 1.5 + .5, PI / 4);
+    for(int i = 0; i < 6; ++i)
+        textfields.emplace_back((3 + 2 * (i / 3)) * BUTTON_H, WNDW_H - ((float) (TOOLBAR_H + BUTTON_H) / 2) + 30 * (i % 3), 25, rm);
     create_guidelines();
 }
 

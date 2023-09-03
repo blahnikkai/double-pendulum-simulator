@@ -13,7 +13,7 @@ TextField::TextField(float x, float y, float h, const ResourceManager & rm) :
     txt.setFillColor(sf::Color::Black);
 }
 
-void TextField::query_click(float x, float y) {
+void TextField::query_click(int x, int y) {
     if(box.getGlobalBounds().contains(x, y)) {
         focus = true;
         box.setOutlineColor(sf::Color::Blue);
@@ -30,7 +30,7 @@ void TextField::text_entered(sf::Event & event) {
     char let = (char)event.text.unicode;
     if(let == '\b')
         content.pop_back();
-    else
+    else if(std::isdigit(let))
         content += let;
     txt.setString(content);
 }

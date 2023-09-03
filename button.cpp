@@ -10,11 +10,15 @@ Button::Button(float x, float y, int w, int h, const std::function<void()> & on_
     bounds.setOutlineColor(sf::Color::Black);
 }
 
-void Button::query_click(float x, float y) {
+void Button::query_click(int x, int y) {
     if(bounds.getGlobalBounds().contains(x, y))
         on_click();
 }
 
 const sf::RectangleShape & Button::get_bounds() {
     return bounds;
+}
+
+void Button::draw(sf::RenderWindow & wndw) const {
+    wndw.draw(bounds);
 }

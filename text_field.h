@@ -14,7 +14,7 @@ class TextField : public Clickable {
     bool focus;
 public:
     TextField(float x, float y, float h, const ResourceManager & rm);
-    void query_click(float x, float y) override;
+    void query_click(int x, int y) override;
     void text_entered(sf::Event & event);
     void draw(sf::RenderWindow & wndw) const;
     std::string get_content() const;

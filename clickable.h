@@ -3,5 +3,5 @@
 class Clickable {
 public:
     virtual ~Clickable() = default;
-    virtual void query_click(float x, float y) = 0;
+    virtual void query_click(int x, int y) = 0;
 };
