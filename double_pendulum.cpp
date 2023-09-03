@@ -6,6 +6,9 @@ DoublePendulum::DoublePendulum(float l1, float theta1, float m1, float l2, float
         m1(m1),
         m2(m2)
 {
+    sf::Color clr = random_clr();
+    p1.set_clr(clr);
+    p2.set_clr(clr);
 }
 
 void DoublePendulum::update() {

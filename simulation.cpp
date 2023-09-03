@@ -11,8 +11,8 @@ void Simulation::draw_all() {
     wndw.draw(toolbar);
     for(const Button * const btn : buttons)
         btn->draw(wndw);
-    for(const TextField & tf : textfields)
-        tf.draw(wndw);
+    for(const NumberField & nf : number_fields)
+        nf.draw(wndw);
 }
 
 void Simulation::create_guidelines() {
@@ -35,14 +35,14 @@ void Simulation::handle_click(sf::Event & event) {
         int y = event.mouseButton.y;
         for(Button * button : buttons)
             button->query_click(x, y);
-        for(TextField & tf : textfields)
-            tf.query_click(x, y);
+        for(NumberField & nf : number_fields)
+            nf.query_click(x, y);
     }
 }
 
 void Simulation::handle_text_enter(sf::Event & event) {
-    for(TextField & tf : textfields)
-        tf.text_entered(event);
+    for(NumberField & nf : number_fields)
+        nf.text_entered(event);
 }
 
 Simulation::Simulation() :
@@ -62,18 +62,18 @@ Simulation::Simulation() :
                      BUTTON_H, BUTTON_H,
                      [&]() {
         try {
-            float leng1 = std::stof(textfields.at(0).get_content());
-            float theta1 = deg_to_rad(std::stof(textfields.at(1).get_content()));
-            float mass1 = std::stof(textfields.at(2).get_content());
-            float leng2 = std::stof(textfields.at(3).get_content());
-            float theta2 = deg_to_rad(std::stof(textfields.at(4).get_content()));
-            float mass2 = std::stof(textfields.at(5).get_content());
+            float leng1 = std::stof(number_fields.at(0).get_content());
+            float theta1 = deg_to_rad(std::stof(number_fields.at(1).get_content()));
+            float mass1 = std::stof(number_fields.at(2).get_content());
+            float leng2 = std::stof(number_fields.at(3).get_content());
+            float theta2 = deg_to_rad(std::stof(number_fields.at(4).get_content()));
+            float mass2 = std::stof(number_fields.at(5).get_content());
             double_pendulums.emplace_back(leng1, theta1, mass1, leng2, theta2, mass2);
         }
         catch(std::invalid_argument & ia) {
             try {
-                float leng = std::stof(textfields.at(0).get_content());
-                float theta = deg_to_rad(std::stof(textfields.at(1).get_content()));
+                float leng = std::stof(number_fields.at(0).get_content());
+                float theta = deg_to_rad(std::stof(number_fields.at(1).get_content()));
                 pendulums.emplace_back(leng, theta);
             }
             catch(std::invalid_argument & ia) {
@@ -98,9 +98,9 @@ Simulation::Simulation() :
         pendulums.emplace_back(i * 1.5 + .5, PI / 4);
     double_pendulums.emplace_back(1, PI, 1, PI / 2, 1, 1);
     for(int i = 0; i < 6; ++i)
-        textfields.emplace_back((4 + 1.1 * (i / 3)) * BUTTON_H,
+        number_fields.emplace_back((4 + 1.1 * (i / 3)) * BUTTON_H,
                                 WNDW_H - ((float) (TOOLBAR_H + BUTTON_H) / 2) + 30 * (i % 3),
-                                rm);
+                                   rm);
     create_guidelines();
 }
 

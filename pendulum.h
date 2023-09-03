@@ -2,11 +2,9 @@
 #include <cmath>
 #include <vector>
 #include <SFML/Graphics.hpp>
-
 #include "util.h"
 
 const sf::Color ARM_CLR = sf::Color(50, 50, 50);
-const sf::Color WEIGHT_CLR = sf::Color::Blue;
 const float g = 9.81;
 const float ARM_W = 5;
 const float WEIGHT_RAD = 15;
@@ -26,5 +24,6 @@ public:
     Pendulum(float leng, float theta);
     void update();
     void draw(sf::RenderWindow & wndw);
+    void set_clr(sf::Color clr);
     friend class DoublePendulum;
 };

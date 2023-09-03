@@ -5,7 +5,7 @@
 #include "button.h"
 #include "pendulum.h"
 #include "double_pendulum.h"
-#include "text_field.h"
+#include "number_field.h"
 #include "resource_manager.h"
 
 // 100 px = 100 cm = 1 m
@@ -32,7 +32,7 @@ class Simulation {
     ImageButton pause_btn;
     ImageButton add_pendulum_btn;
     ImageButton clear_btn;
-    std::vector<TextField> textfields;
+    std::vector<NumberField> number_fields;
     std::vector<Button *> buttons;
     void draw_all();
     void create_guidelines();

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "pendulum.h"
+#include "util.h"
 
 class DoublePendulum {
     Pendulum p1;

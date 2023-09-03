@@ -4,17 +4,17 @@
 #include "clickable.h"
 #include "resource_manager.h"
 
-const int TEXTFIELD_W = 75;
-const int TEXTFIELD_H = 22;
+const int NUMBER_FIELD_W = 75;
+const int NUMBER_FIELD_H = 22;
 const int TEXT_SIZE = 18;
 
-class TextField : public Clickable {
+class NumberField : public Clickable {
     std::string content;
     sf::Text txt;
     sf::RectangleShape box;
     bool focus;
 public:
-    TextField(float x, float y, const ResourceManager & rm);
+    NumberField(float x, float y, const ResourceManager & rm);
     void query_click(int x, int y) override;
     void text_entered(sf::Event & event);
     void draw(sf::RenderWindow & wndw) const;

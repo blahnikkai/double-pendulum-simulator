@@ -20,7 +20,7 @@ Pendulum::Pendulum(float leng, float theta) :
     arm.setPosition(CENTER_X, CENTER_Y);
     weight.setPosition(CENTER_X, CENTER_Y);
     arm.setFillColor(ARM_CLR);
-    weight.setFillColor(WEIGHT_CLR);
+    weight.setFillColor(random_clr());
     weight.setOutlineThickness(2);
     weight.setOutlineColor(sf::Color::Black);
 }
@@ -35,4 +35,8 @@ void Pendulum::draw(sf::RenderWindow & wndw) {
     weight.setRotation(rad_to_deg(theta));
     wndw.draw(arm);
     wndw.draw(weight);
+}
+
+void Pendulum::set_clr(sf::Color new_clr) {
+    weight.setFillColor(new_clr);
 }

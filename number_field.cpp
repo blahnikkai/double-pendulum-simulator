@@ -1,10 +1,10 @@
-#include "text_field.h"
+#include "number_field.h"
 
-TextField::TextField(float x, float y, const ResourceManager & rm) :
+NumberField::NumberField(float x, float y, const ResourceManager & rm) :
     focus(false)
 {
     box.setPosition(x, y);
-    box.setSize({TEXTFIELD_W, TEXTFIELD_H});
+    box.setSize({NUMBER_FIELD_W, NUMBER_FIELD_H});
     box.setOutlineColor(sf::Color::Black);
     box.setOutlineThickness(2);
     txt.setPosition(x, y);
@@ -13,7 +13,7 @@ TextField::TextField(float x, float y, const ResourceManager & rm) :
     txt.setFillColor(sf::Color::Black);
 }
 
-void TextField::query_click(int x, int y) {
+void NumberField::query_click(int x, int y) {
     if(box.getGlobalBounds().contains(x, y)) {
         focus = true;
         box.setOutlineColor(sf::Color::Blue);
@@ -24,22 +24,22 @@ void TextField::query_click(int x, int y) {
     }
 }
 
-void TextField::text_entered(sf::Event & event) {
+void NumberField::text_entered(sf::Event & event) {
     if(!focus)
         return;
     char let = (char)event.text.unicode;
     if(let == '\b')
         content.pop_back();
-    else if(std::isdigit(let) || let == '.')
+    else if(std::isdigit(let) || let == '.' || let == '-')
         content += let;
     txt.setString(content);
 }
 
-void TextField::draw(sf::RenderWindow & wndw) const {
+void NumberField::draw(sf::RenderWindow & wndw) const {
     wndw.draw(box);
     wndw.draw(txt);
 }
 
-std::string TextField::get_content() const {
+std::string NumberField::get_content() const {
     return content;
 }
