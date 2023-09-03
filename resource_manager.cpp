@@ -6,6 +6,7 @@ ResourceManager::ResourceManager() {
         sf::Texture txtr;
         if(!txtr.loadFromFile("resources/images/" + filename))
             throw std::runtime_error("Failed to load file: resources/images/" + filename);
+        txtr.setSmooth(true);
         txtr_map.emplace(filename, txtr);
     }
     if(!font.loadFromFile("resources/DMSans-Regular.ttf"))

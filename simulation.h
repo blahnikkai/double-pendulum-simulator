@@ -25,6 +25,7 @@ class Simulation {
     ResourceManager rm;
     sf::RenderWindow wndw;
     std::vector<Pendulum> pendulums;
+    std::vector<DoublePendulum> double_pendulums;
     std::vector<sf::RectangleShape> guidelines;
     sf::CircleShape pivot;
     sf::RectangleShape toolbar;

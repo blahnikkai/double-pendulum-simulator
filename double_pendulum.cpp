@@ -1,14 +1,14 @@
 #include "double_pendulum.h"
 
-DoublePendulum::DoublePendulum(float l1, float theta1, float l2, float theta2) :
+DoublePendulum::DoublePendulum(float l1, float theta1, float m1, float l2, float theta2, float m2) :
         p1(l1, theta1),
-        p2(l2, theta2)
+        p2(l2, theta2),
+        m1(m1),
+        m2(m2)
 {
 }
 
 void DoublePendulum::update() {
-    float m1 = 100;
-    float m2 = 100;
     p1.acc = (-g * (2 * m1 + m2) * sin(p1.theta)
                    - m2 * g * sin(p1.theta - 2 * p2.theta)
                    - 2 * sin(p1.theta - p2.theta) * m2 *
@@ -24,11 +24,11 @@ void DoublePendulum::update() {
     p2.integrate();
 }
 
-void DoublePendulum::draw(sf::RenderWindow & wndw) {
+void DoublePendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y) {
     p1.arm.setRotation(rad_to_deg(p1.theta));
     p1.weight.setRotation(rad_to_deg(p1.theta));
-    p2.arm.setPosition(-PX_METER_RATIO * p1.leng * sin(p1.theta) + CENTER_X,
-                             PX_METER_RATIO * p1.leng * cos(p1.theta) + CENTER_Y);
+    p2.arm.setPosition(-PX_METER_RATIO * p1.leng * sin(p1.theta) + center_x,
+                             PX_METER_RATIO * p1.leng * cos(p1.theta) + center_y);
     p2.weight.setPosition(p2.arm.getPosition());
     p2.arm.setRotation(rad_to_deg(p2.theta));
     p2.weight.setRotation(rad_to_deg(p2.theta));

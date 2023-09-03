@@ -26,6 +26,5 @@ public:
     Pendulum(float leng, float theta);
     void update();
     void draw(sf::RenderWindow & wndw);
-
     friend class DoublePendulum;
 };

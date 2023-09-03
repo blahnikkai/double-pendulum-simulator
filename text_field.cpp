@@ -1,10 +1,10 @@
 #include "text_field.h"
 
-TextField::TextField(float x, float y, float h, const ResourceManager & rm) :
+TextField::TextField(float x, float y, const ResourceManager & rm) :
     focus(false)
 {
     box.setPosition(x, y);
-    box.setSize({TEXTFIELD_W, h});
+    box.setSize({TEXTFIELD_W, TEXTFIELD_H});
     box.setOutlineColor(sf::Color::Black);
     box.setOutlineThickness(2);
     txt.setPosition(x, y);
@@ -30,7 +30,7 @@ void TextField::text_entered(sf::Event & event) {
     char let = (char)event.text.unicode;
     if(let == '\b')
         content.pop_back();
-    else if(std::isdigit(let))
+    else if(std::isdigit(let) || let == '.')
         content += let;
     txt.setString(content);
 }

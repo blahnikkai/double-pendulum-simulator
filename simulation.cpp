@@ -3,9 +3,11 @@
 void Simulation::draw_all() {
     for(sf::RectangleShape & gl : guidelines)
         wndw.draw(gl);
-    for(Pendulum & p: pendulums)
-        p.draw(wndw);
     wndw.draw(pivot);
+    for(Pendulum & p : pendulums)
+        p.draw(wndw);
+    for(DoublePendulum & dp : double_pendulums)
+        dp.draw(wndw, CENTER_X, CENTER_Y);
     wndw.draw(toolbar);
     for(const Button * const btn : buttons)
         btn->draw(wndw);
@@ -56,30 +58,36 @@ Simulation::Simulation() :
             pause_btn.get_sprt().setTexture(rm.get("play.png"));
         paused = !paused;
     }, rm.get("pause.png")),
-    add_pendulum_btn(7 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
+    add_pendulum_btn(6.5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
                      BUTTON_H, BUTTON_H,
                      [&]() {
-        float leng;
-        float theta;
         try {
-            leng = std::stof(textfields.at(0).get_content());
-            theta = deg_to_rad(std::stof(textfields.at(2).get_content()));
+            float leng1 = std::stof(textfields.at(0).get_content());
+            float theta1 = deg_to_rad(std::stof(textfields.at(1).get_content()));
+            float mass1 = std::stof(textfields.at(2).get_content());
+            float leng2 = std::stof(textfields.at(3).get_content());
+            float theta2 = deg_to_rad(std::stof(textfields.at(4).get_content()));
+            float mass2 = std::stof(textfields.at(5).get_content());
+            double_pendulums.emplace_back(leng1, theta1, mass1, leng2, theta2, mass2);
         }
         catch(std::invalid_argument & ia) {
-            return;
+            try {
+                float leng = std::stof(textfields.at(0).get_content());
+                float theta = deg_to_rad(std::stof(textfields.at(1).get_content()));
+                pendulums.emplace_back(leng, theta);
+            }
+            catch(std::invalid_argument & ia) {
+                return;
+            }
         }
-        pendulums.emplace_back(leng, theta);
     }, rm.get("add.png")),
     clear_btn(9 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
               BUTTON_H, BUTTON_H,
-              [&]() {pendulums.clear();},
+              [&]() {
+                    pendulums.clear();
+                    double_pendulums.clear();
+                },
               rm.get("clear.png")),
-//    angle1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
-//    leng1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 30, 25, rm),
-//    mass1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 60, 25, rm),
-//    angle2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
-//    leng2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 30, 25, rm),
-//    mass2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 60, 25, rm),
     toolbar({WNDW_W, TOOLBAR_H}),
     buttons({&pause_btn, &clear_btn, &add_pendulum_btn})
 {
@@ -88,13 +96,15 @@ Simulation::Simulation() :
     toolbar.setFillColor(TOOLBAR_CLR);
     for(int i = 0; i < 3; ++i)
         pendulums.emplace_back(i * 1.5 + .5, PI / 4);
+    double_pendulums.emplace_back(1, PI, 1, PI / 2, 1, 1);
     for(int i = 0; i < 6; ++i)
-        textfields.emplace_back((3 + 2 * (i / 3)) * BUTTON_H, WNDW_H - ((float) (TOOLBAR_H + BUTTON_H) / 2) + 30 * (i % 3), 25, rm);
+        textfields.emplace_back((4 + 1.1 * (i / 3)) * BUTTON_H,
+                                WNDW_H - ((float) (TOOLBAR_H + BUTTON_H) / 2) + 30 * (i % 3),
+                                rm);
     create_guidelines();
 }
 
 void Simulation::start() {
-    DoublePendulum dp(1, PI, 1, PI / 2);
     while(wndw.isOpen()) {
         sf::Event event;
         while(wndw.pollEvent(event)) {
@@ -107,12 +117,12 @@ void Simulation::start() {
         }
         wndw.clear(sf::Color::Black);
         draw_all();
-        dp.draw(wndw);
         wndw.display();
         if(!paused) {
-            for(Pendulum & p: pendulums)
+            for(Pendulum & p : pendulums)
                 p.update();
-            dp.update();
+            for(DoublePendulum & dp : double_pendulums)
+                dp.update();
         }
     }
 }
