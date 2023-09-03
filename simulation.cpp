@@ -12,8 +12,12 @@ void Simulation::draw_all() {
     wndw.draw(add_pendulum_btn.get_sprt());
     wndw.draw(clear_btn.get_bounds());
     wndw.draw(clear_btn.get_sprt());
-    angle_tf.draw(wndw);
-    leng_tf.draw(wndw);
+    angle1_tf.draw(wndw);
+    leng1_tf.draw(wndw);
+    mass1_tf.draw(wndw);
+    angle2_tf.draw(wndw);
+    leng2_tf.draw(wndw);
+    mass2_tf.draw(wndw);
 }
 
 void Simulation::create_guidelines() {
@@ -37,20 +41,27 @@ void Simulation::handle_click(sf::Event & event) {
         pause_btn.query_click(x, y);
         add_pendulum_btn.query_click(x, y);
         clear_btn.query_click(x, y);
-        angle_tf.query_click(x, y);
-        leng_tf.query_click(x, y);
+        angle1_tf.query_click(x, y);
+        leng1_tf.query_click(x, y);
+        mass1_tf.query_click(x, y);
+        angle2_tf.query_click(x, y);
+        leng2_tf.query_click(x, y);
+        mass2_tf.query_click(x, y);
     }
 }
 
 void Simulation::handle_text_enter(sf::Event & event) {
-    angle_tf.text_entered(event);
-    leng_tf.text_entered(event);
+    angle1_tf.text_entered(event);
+    leng1_tf.text_entered(event);
+    mass1_tf.text_entered(event);
+    angle2_tf.text_entered(event);
+    leng2_tf.text_entered(event);
+    mass2_tf.text_entered(event);
 }
 
 Simulation::Simulation() :
     paused(false),
-    wndw(sf::VideoMode(WNDW_W, WNDW_H),
-"Pendulum Simulator", sf::Style::Close),
+    wndw(sf::VideoMode(WNDW_W, WNDW_H),"Pendulum Simulator", sf::Style::Close),
     pivot(PIVOT_RAD),
     pause_btn(BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
               BUTTON_H, BUTTON_H,
@@ -65,15 +76,10 @@ Simulation::Simulation() :
                      BUTTON_H, BUTTON_H,
                      [&]() {
         float leng;
-        try {
-            leng = std::stof(leng_tf.get_content());
-        }
-        catch(std::invalid_argument & ia) {
-            return;
-        }
         float theta;
         try {
-            theta = deg_to_rad(std::stof(angle_tf.get_content()));
+            leng = std::stof(leng1_tf.get_content());
+            theta = deg_to_rad(std::stof(angle1_tf.get_content()));
         }
         catch(std::invalid_argument & ia) {
             return;
@@ -84,8 +90,12 @@ Simulation::Simulation() :
               BUTTON_H, BUTTON_H,
               [&]() {pendulums.clear();},
               rm.get("clear.png")),
-    angle_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
-    leng_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 50, 25, rm),
+    angle1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
+    leng1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 30, 25, rm),
+    mass1_tf(3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 60, 25, rm),
+    angle2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), 25, rm),
+    leng2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 30, 25, rm),
+    mass2_tf(5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2) + 60, 25, rm),
     toolbar({WNDW_W, TOOLBAR_H})
 {
     wndw.setFramerateLimit(FRAMERATE);

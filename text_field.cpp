@@ -4,10 +4,11 @@ TextField::TextField(float x, float y, float h, const ResourceManager & rm) :
     focus(false)
 {
     box.setPosition(x, y);
-    box.setSize({200, h});
+    box.setSize({TEXTFIELD_W, h});
     box.setOutlineColor(sf::Color::Black);
+    box.setOutlineThickness(2);
     txt.setPosition(x, y);
-    txt.setCharacterSize(24);
+    txt.setCharacterSize(TEXT_SIZE);
     txt.setFont(rm.get_font());
     txt.setFillColor(sf::Color::Black);
 }
@@ -15,11 +16,11 @@ TextField::TextField(float x, float y, float h, const ResourceManager & rm) :
 void TextField::query_click(float x, float y) {
     if(box.getGlobalBounds().contains(x, y)) {
         focus = true;
-        box.setOutlineThickness(5);
+        box.setOutlineColor(sf::Color::Blue);
     }
     else {
         focus = false;
-        box.setOutlineThickness(0);
+        box.setOutlineColor(sf::Color::Black);
     }
 }
 

@@ -31,8 +31,12 @@ class Simulation {
     ImageButton pause_btn;
     ImageButton add_pendulum_btn;
     ImageButton clear_btn;
-    TextField angle_tf;
-    TextField leng_tf;
+    TextField angle1_tf;
+    TextField leng1_tf;
+    TextField mass1_tf;
+    TextField angle2_tf;
+    TextField leng2_tf;
+    TextField mass2_tf;
     void draw_all();
     void create_guidelines();
     void handle_click(sf::Event & event);

@@ -4,6 +4,9 @@
 #include "clickable.h"
 #include "resource_manager.h"
 
+const int TEXTFIELD_W = 100;
+const int TEXT_SIZE = 20;
+
 class TextField : public Clickable {
     std::string content;
     sf::Text txt;
