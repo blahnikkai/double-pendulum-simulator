@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <SFML/graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "image_button.h"
 #include "button.h"
 #include "pendulum.h"

@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
-#include <SFML/graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 class ResourceManager {
     std::map<std::string, sf::Texture> txtr_map;

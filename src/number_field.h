@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <SFML/graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "clickable.h"
 #include "resource_manager.h"
 
