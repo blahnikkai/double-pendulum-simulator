@@ -30,7 +30,7 @@ void Pendulum::update() {
     integrate();
 }
 
-void Pendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused) {
+void Pendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused, bool draw_trace) {
     arm.setPosition(center_x, center_y);
     weight.setPosition(center_x, center_y);
     arm.setRotation(rad_to_deg(theta));
@@ -45,6 +45,8 @@ void Pendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y, bool pa
         if(trace.size() > 50)
             trace.pop_back();
     }
+    if(!draw_trace)
+        return;
     double opacity = 100;
     for(sf::CircleShape & i : trace) {
         sf::Color color = i.getFillColor();

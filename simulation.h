@@ -24,6 +24,7 @@ const std::vector<std::string> number_field_placeholders = {"Angle 1 (deg)", "Le
 
 class Simulation {
     bool paused;
+    bool draw_trace;
     ResourceManager rm;
     sf::RenderWindow wndw;
     std::vector<Pendulum> pendulums;
@@ -31,6 +32,7 @@ class Simulation {
     std::vector<sf::RectangleShape> guidelines;
     sf::CircleShape pivot;
     sf::RectangleShape toolbar;
+    ImageButton trace_btn;
     ImageButton pause_btn;
     ImageButton add_pendulum_btn;
     ImageButton clear_btn;

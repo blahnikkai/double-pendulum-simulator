@@ -27,12 +27,12 @@ void DoublePendulum::update() {
     p2.integrate();
 }
 
-void DoublePendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused) {
-    p1.draw(wndw, center_x, center_y, paused);
+void DoublePendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused, bool draw_trace) {
+    p1.draw(wndw, center_x, center_y, paused, draw_trace);
     p2.draw(wndw,
             -PX_METER_RATIO * p1.leng * sin(p1.theta) + center_x,
             PX_METER_RATIO * p1.leng * cos(p1.theta) + center_y,
-            paused);
+            paused, draw_trace);
     wndw.draw(p1.arm);
     wndw.draw(p2.arm);
     wndw.draw(p1.weight);

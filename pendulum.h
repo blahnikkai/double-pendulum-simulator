@@ -25,7 +25,7 @@ class Pendulum {
 public:
     Pendulum(float theta, float leng);
     void update();
-    void draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused);
+    void draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused, bool draw_trace);
     void set_clr(sf::Color clr);
     friend class DoublePendulum;
 };

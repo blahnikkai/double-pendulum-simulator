@@ -12,5 +12,5 @@ class DoublePendulum {
 public:
     DoublePendulum(float theta1, float l1, float m1, float theta2, float l2, float m2);
     void update();
-    void draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused);
+    void draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused, bool draw_trace);
 };

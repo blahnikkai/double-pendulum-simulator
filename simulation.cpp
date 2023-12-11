@@ -5,9 +5,9 @@ void Simulation::draw_all() {
         wndw.draw(gl);
     wndw.draw(pivot);
     for(Pendulum & p: pendulums)
-        p.draw(wndw, CENTER_X, CENTER_Y, paused);
+        p.draw(wndw, CENTER_X, CENTER_Y, paused, draw_trace);
     for(DoublePendulum & dp: double_pendulums)
-        dp.draw(wndw, CENTER_X, CENTER_Y, paused);
+        dp.draw(wndw, CENTER_X, CENTER_Y, paused, draw_trace);
     wndw.draw(toolbar);
     for(const Button * const btn : buttons)
         btn->draw(wndw);
@@ -47,9 +47,15 @@ void Simulation::handle_text_enter(sf::Event & event) {
 
 Simulation::Simulation() :
     paused(false),
+    draw_trace(true),
     wndw(sf::VideoMode(WNDW_W, WNDW_H),"Pendulum Simulator", sf::Style::Close),
     pivot(PIVOT_RAD),
-    pause_btn(BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
+    trace_btn(.5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), BUTTON_H, BUTTON_H,
+        [&]() {
+            draw_trace = !draw_trace;
+        }
+    , rm.get("trace.png")),
+    pause_btn(1.7 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
               BUTTON_H, BUTTON_H,
               [&]() {
         if (paused)
@@ -58,7 +64,7 @@ Simulation::Simulation() :
             pause_btn.get_sprt().setTexture(rm.get("play.png"));
         paused = !paused;
     }, rm.get("pause.png")),
-    add_pendulum_btn(7.3 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
+    add_pendulum_btn(WNDW_W - 2.7 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
                      BUTTON_H, BUTTON_H,
                      [&]() {
         try {
@@ -81,7 +87,7 @@ Simulation::Simulation() :
             }
         }
     }, rm.get("add.png"), .75),
-    clear_btn(9 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
+    clear_btn(WNDW_W - 1.5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
               BUTTON_H, BUTTON_H,
               [&]() {
                     pendulums.clear();
@@ -89,7 +95,7 @@ Simulation::Simulation() :
                 },
               rm.get("clear.png")),
     toolbar({WNDW_W, TOOLBAR_H}),
-    buttons({&pause_btn, &clear_btn, &add_pendulum_btn})
+    buttons({&trace_btn, &pause_btn, &clear_btn, &add_pendulum_btn})
 {
     wndw.setFramerateLimit(FRAMERATE);
     toolbar.setPosition(0, WNDW_H - TOOLBAR_H);
@@ -98,8 +104,8 @@ Simulation::Simulation() :
         pendulums.emplace_back(i * 1.5 + .5, PI / 4);
     double_pendulums.emplace_back(1, PI, 1, PI / 2, 1, 1);
     for(int i = 0; i < 6; ++i)
-        number_fields.emplace_back(3.9 * BUTTON_H + (NUMBER_FIELD_W * 1.05 * (i >= 3)),
-                                WNDW_H - ((float) (TOOLBAR_H + BUTTON_H) / 2) + 30 * (i % 3),
+        number_fields.emplace_back(WNDW_W - 5.9 * BUTTON_H + (i >= 3) * (NUMBER_FIELD_W + .1 * BUTTON_H),
+                                WNDW_H - ((float) (TOOLBAR_H + BUTTON_H) / 2) + 30 * (i % 3) - 5,
                                    rm, number_field_placeholders.at(i));
     create_guidelines();
 }
