@@ -20,6 +20,8 @@ const int BUTTON_H = 75;
 const float CENTER_X = (float)WNDW_W / 2;
 const float CENTER_Y = (float)(WNDW_H - TOOLBAR_H) / 2;
 
+const std::vector<std::string> number_field_placeholders = {"Angle 1 (deg)", "Length 1 (m)", "Mass 1 (kg)", "Angle 2 (deg)", "Length 2 (m)", "Mass 2 (kg)"};
+
 class Simulation {
     bool paused;
     ResourceManager rm;

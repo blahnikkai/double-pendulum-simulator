@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <vector>
+#include <deque>
 #include <SFML/Graphics.hpp>
 #include "util.h"
 
@@ -17,13 +18,14 @@ class Pendulum {
     float speed;
     sf::RectangleShape arm;
     sf::CircleShape weight;
+    std::deque<sf::CircleShape> trace;
 
     void integrate();
 
 public:
-    Pendulum(float leng, float theta);
+    Pendulum(float theta, float leng);
     void update();
-    void draw(sf::RenderWindow & wndw);
+    void draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused);
     void set_clr(sf::Color clr);
     friend class DoublePendulum;
 };

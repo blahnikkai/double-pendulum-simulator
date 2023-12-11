@@ -7,7 +7,7 @@ class ImageButton : public Button {
     std::function<void()> on_click;
 
 public:
-    ImageButton(float x, float y, int w, int h, const std::function<void()> & on_click, const sf::Texture & txtr);
+    ImageButton(float x, float y, int w, int h, const std::function<void()> & on_click, const sf::Texture & txtr, float img_scale=1.);
     sf::Sprite & get_sprt();
     const sf::Sprite & get_sprt() const;
     void draw(sf::RenderWindow & wndw) const;

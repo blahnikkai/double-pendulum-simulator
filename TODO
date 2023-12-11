@@ -5,7 +5,6 @@ Features
 * Button to toggle guidelines
 * Info screen
 * Error popup for non-numeric textfield input
-* Add variable mass for double pendulums, currently all 100 (kg?)
 
 Fixes
 

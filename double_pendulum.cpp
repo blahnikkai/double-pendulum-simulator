@@ -1,8 +1,8 @@
 #include "double_pendulum.h"
 
-DoublePendulum::DoublePendulum(float l1, float theta1, float m1, float l2, float theta2, float m2) :
-        p1(l1, theta1),
-        p2(l2, theta2),
+DoublePendulum::DoublePendulum(float theta1, float l1, float m1, float theta2, float l2, float m2) :
+        p1(theta1, l1),
+        p2(theta2, l2),
         m1(m1),
         m2(m2)
 {
@@ -27,15 +27,12 @@ void DoublePendulum::update() {
     p2.integrate();
 }
 
-void DoublePendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y) {
-    p1.arm.setRotation(rad_to_deg(p1.theta));
-    p1.weight.setRotation(rad_to_deg(p1.theta));
-    p2.arm.setPosition(-PX_METER_RATIO * p1.leng * sin(p1.theta) + center_x,
-                             PX_METER_RATIO * p1.leng * cos(p1.theta) + center_y);
-    p2.weight.setPosition(p2.arm.getPosition());
-    p2.arm.setRotation(rad_to_deg(p2.theta));
-    p2.weight.setRotation(rad_to_deg(p2.theta));
-
+void DoublePendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused) {
+    p1.draw(wndw, center_x, center_y, paused);
+    p2.draw(wndw,
+            -PX_METER_RATIO * p1.leng * sin(p1.theta) + center_x,
+            PX_METER_RATIO * p1.leng * cos(p1.theta) + center_y,
+            paused);
     wndw.draw(p1.arm);
     wndw.draw(p2.arm);
     wndw.draw(p1.weight);

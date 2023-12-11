@@ -1,7 +1,7 @@
 #include "resource_manager.h"
 
 ResourceManager::ResourceManager() {
-    std::vector<std::string> filename_lst = {"add.png", "angle.png", "cat2.jpeg", "clear.png", "length.png", "pause.png", "play.png"};
+    std::vector<std::string> filename_lst = {"add.png", "clear.png", "pause.png", "play.png"};
     for(const std::string & filename : filename_lst) {
         sf::Texture txtr;
         if(!txtr.loadFromFile("resources/images/" + filename))

@@ -10,7 +10,7 @@ class DoublePendulum {
     float m2;
 
 public:
-    DoublePendulum(float l1, float theta1, float m1, float l2, float theta2, float m2);
+    DoublePendulum(float theta1, float l1, float m1, float theta2, float l2, float m2);
     void update();
-    void draw(sf::RenderWindow & wndw, int center_x, int center_y);
+    void draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused);
 };

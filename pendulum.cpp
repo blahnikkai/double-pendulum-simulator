@@ -7,7 +7,7 @@ void Pendulum::integrate() {
 }
 
 // leng is physics unit meters
-Pendulum::Pendulum(float leng, float theta) :
+Pendulum::Pendulum(float theta, float leng) :
     leng(leng),
     theta(theta),
     arm({ARM_W, leng * PX_METER_RATIO}),
@@ -30,11 +30,30 @@ void Pendulum::update() {
     integrate();
 }
 
-void Pendulum::draw(sf::RenderWindow & wndw) {
+void Pendulum::draw(sf::RenderWindow & wndw, int center_x, int center_y, bool paused) {
+    arm.setPosition(center_x, center_y);
+    weight.setPosition(center_x, center_y);
     arm.setRotation(rad_to_deg(theta));
     weight.setRotation(rad_to_deg(theta));
     wndw.draw(arm);
     wndw.draw(weight);
+
+    if(!paused) {
+        sf::CircleShape weight_copy = weight;
+        weight_copy.setOutlineThickness(0);
+        trace.push_front(weight_copy);
+        if(trace.size() > 50)
+            trace.pop_back();
+    }
+    double opacity = 100;
+    for(sf::CircleShape & i : trace) {
+        sf::Color color = i.getFillColor();
+        // set opacity
+        color.a = (unsigned char)opacity;
+        opacity *= .9;
+        i.setFillColor(color);
+        wndw.draw(i);
+    }
 }
 
 void Pendulum::set_clr(sf::Color new_clr) {
