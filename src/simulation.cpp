@@ -77,7 +77,7 @@ void Simulation::handle_text_enter(sf::Event & event) {
 Simulation::Simulation() :
     paused(false),
     draw_trace(true),
-    wndw(sf::VideoMode(WNDW_W, WNDW_H),"Pendulum Simulator", sf::Style::Close),
+    wndw(sf::VideoMode(WNDW_W, WNDW_H),"Double Pendulum Simulator", sf::Style::Close),
     pivot(PIVOT_RAD),
     trace_btn(.5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2), BUTTON_H, BUTTON_H,
         [&]() {
