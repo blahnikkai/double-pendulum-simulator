@@ -14,11 +14,20 @@ sf::Sprite & ImageButton::get_sprt() {
     return sprt;
 }
 
-const sf::Sprite & ImageButton::get_sprt() const {
-    return sprt;
+bool ImageButton::query_hover(int x, int y, sf::RenderWindow & wndw) {
+    if(bounds.getGlobalBounds().contains(x, y)) {
+        sprt.setColor(sf::Color(100, 100, 100));
+        bounds.setFillColor(sf::Color(100, 100, 100));
+        return true;
+    }
+    else {
+        sprt.setColor(sf::Color::White);
+        bounds.setFillColor(sf::Color::White);
+        return false;
+    }
 }
 
 void ImageButton::draw(sf::RenderWindow & wndw) const {
     Button::draw(wndw);
     wndw.draw(sprt);
-};
+}

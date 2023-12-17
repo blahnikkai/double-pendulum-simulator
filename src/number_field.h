@@ -17,6 +17,7 @@ class NumberField : public Clickable {
 public:
     NumberField(float x, float y, const ResourceManager & rm, const std::string & placeholder_txt);
     void query_click(int x, int y) override;
+    bool query_hover(int x, int y, sf::RenderWindow & wndw) override;
     void text_entered(sf::Event & event);
     void draw(sf::RenderWindow & wndw) const;
     std::string get_content() const;

@@ -26,6 +26,17 @@ void NumberField::query_click(int x, int y) {
     }
 }
 
+bool NumberField::query_hover(int x, int y, sf::RenderWindow & wndw) {
+    if(box.getGlobalBounds().contains(x, y)) {
+        box.setFillColor(sf::Color(100, 100, 100));
+        return true;
+    }
+    else {
+        box.setFillColor(sf::Color::White);
+        return false;
+    }
+}
+
 void NumberField::text_entered(sf::Event & event) {
     if(!focus)
         return;

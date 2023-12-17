@@ -1,7 +1,9 @@
 #include "resource_manager.h"
+#include <unordered_map>
+
+const std::vector<std::string> filename_lst = {"add.png", "clear.png", "pause.png", "play.png", "trace.png"};
 
 ResourceManager::ResourceManager() {
-    std::vector<std::string> filename_lst = {"add.png", "clear.png", "pause.png", "play.png", "trace.png"};
     for(const std::string & filename : filename_lst) {
         sf::Texture txtr;
         if(!txtr.loadFromFile("src/resources/images/" + filename))
@@ -13,11 +15,10 @@ ResourceManager::ResourceManager() {
         throw std::runtime_error("Failed to load file: resources/DMSans-Regular.ttf");
 }
 
-const sf::Texture & ResourceManager::get(const std::string & filename) const {
+const sf::Texture & ResourceManager::get_texture(const std::string & filename) const {
     return txtr_map.at(filename);
 }
 
 const sf::Font & ResourceManager::get_font() const {
     return font;
 }
-

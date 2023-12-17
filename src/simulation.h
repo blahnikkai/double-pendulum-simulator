@@ -32,6 +32,9 @@ class Simulation {
     std::vector<sf::RectangleShape> guidelines;
     sf::CircleShape pivot;
     sf::RectangleShape toolbar;
+    sf::Cursor hand;
+    sf::Cursor arrow;
+    sf::Cursor text;
     ImageButton trace_btn;
     ImageButton pause_btn;
     ImageButton add_pendulum_btn;
@@ -41,6 +44,9 @@ class Simulation {
     void draw_all();
     void create_guidelines();
     void handle_click(sf::Event & event);
+    void handle_mouse_move(sf::Event & event);
+    bool handle_mouse_move_buttons(int x, int y);
+    bool handle_mouse_move_nfs(int x, int y);
     void handle_text_enter(sf::Event & event);
 
 public:

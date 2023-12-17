@@ -40,6 +40,35 @@ void Simulation::handle_click(sf::Event & event) {
     }
 }
 
+void Simulation::handle_mouse_move(sf::Event & event) {
+    int x = event.mouseMove.x;
+    int y = event.mouseMove.y;
+    bool hover_button = handle_mouse_move_buttons(x, y);
+    bool hover_nfs = handle_mouse_move_nfs(x, y);
+    if(hover_button)
+        wndw.setMouseCursor(hand);
+    else if(hover_nfs)
+        wndw.setMouseCursor(text);
+    else
+        wndw.setMouseCursor(arrow);
+}
+
+bool Simulation::handle_mouse_move_buttons(int x, int y) {
+    for(Button * button : buttons) {
+        if(button->query_hover(x, y, wndw))
+            return true;
+    }
+    return false;
+}
+
+bool Simulation::handle_mouse_move_nfs(int x, int y) {
+    for(NumberField & nf : number_fields) {
+        if(nf.query_hover(x, y, wndw))
+            return true;
+    }
+    return false;
+}
+
 void Simulation::handle_text_enter(sf::Event & event) {
     for(NumberField & nf : number_fields)
         nf.text_entered(event);
@@ -54,16 +83,16 @@ Simulation::Simulation() :
         [&]() {
             draw_trace = !draw_trace;
         }
-    , rm.get("trace.png")),
+    , rm.get_texture("trace.png")),
     pause_btn(1.7 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
               BUTTON_H, BUTTON_H,
               [&]() {
-        if (paused)
-            pause_btn.get_sprt().setTexture(rm.get("pause.png"));
+        if(paused)
+            pause_btn.get_sprt().setTexture(rm.get_texture("pause.png"));
         else
-            pause_btn.get_sprt().setTexture(rm.get("play.png"));
+            pause_btn.get_sprt().setTexture(rm.get_texture("play.png"));
         paused = !paused;
-    }, rm.get("pause.png")),
+    }, rm.get_texture("pause.png")),
     add_pendulum_btn(WNDW_W - 2.7 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
                      BUTTON_H, BUTTON_H,
                      [&]() {
@@ -86,14 +115,14 @@ Simulation::Simulation() :
                 return;
             }
         }
-    }, rm.get("add.png"), .75),
+    }, rm.get_texture("add.png"), .75),
     clear_btn(WNDW_W - 1.5 * BUTTON_H, WNDW_H - ((float)(TOOLBAR_H + BUTTON_H) / 2),
               BUTTON_H, BUTTON_H,
               [&]() {
                     pendulums.clear();
                     double_pendulums.clear();
                 },
-              rm.get("clear.png")),
+              rm.get_texture("clear.png")),
     toolbar({WNDW_W, TOOLBAR_H}),
     buttons({&trace_btn, &pause_btn, &clear_btn, &add_pendulum_btn})
 {
@@ -108,6 +137,8 @@ Simulation::Simulation() :
                                 WNDW_H - ((float) (TOOLBAR_H + BUTTON_H) / 2) + 30 * (i % 3) - 5,
                                    rm, number_field_placeholders.at(i));
     create_guidelines();
+    text.loadFromSystem(sf::Cursor::Text);
+    hand.loadFromSystem(sf::Cursor::Hand);
 }
 
 void Simulation::start() {
@@ -118,6 +149,8 @@ void Simulation::start() {
                 wndw.close();
             if(event.type == sf::Event::MouseButtonPressed)
                 handle_click(event);
+            if(event.type == sf::Event::MouseMoved)
+                handle_mouse_move(event);
             if(event.type == sf::Event::TextEntered)
                 handle_text_enter(event);
         }
