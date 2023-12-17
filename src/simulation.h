@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "image_button.h"
 #include "button.h"
 #include "pendulum.h"
 #include "double_pendulum.h"
@@ -35,10 +34,10 @@ class Simulation {
     sf::Cursor hand;
     sf::Cursor arrow;
     sf::Cursor text;
-    ImageButton trace_btn;
-    ImageButton pause_btn;
-    ImageButton add_pendulum_btn;
-    ImageButton clear_btn;
+    Button trace_btn;
+    Button pause_btn;
+    Button add_pendulum_btn;
+    Button clear_btn;
     std::vector<NumberField> number_fields;
     std::vector<Button *> buttons;
     void draw_all();
