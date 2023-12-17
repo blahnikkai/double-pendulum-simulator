@@ -130,8 +130,8 @@ Simulation::Simulation() :
     toolbar.setPosition(0, WNDW_H - TOOLBAR_H);
     toolbar.setFillColor(TOOLBAR_CLR);
     for(int i = 0; i < 3; ++i)
-        pendulums.emplace_back(i * 1.5 + .5, PI / 4);
-    double_pendulums.emplace_back(1, PI, 1, PI / 2, 1, 1);
+        pendulums.emplace_back(PI / 4, i * 1.5 + .5);
+    double_pendulums.emplace_back(PI, 1, 1, PI / 2, 1, 1);
     for(int i = 0; i < 6; ++i)
         number_fields.emplace_back(WNDW_W - 5.9 * BUTTON_H + (i >= 3) * (NUMBER_FIELD_W + .1 * BUTTON_H),
                                 WNDW_H - ((float) (TOOLBAR_H + BUTTON_H) / 2) + 30 * (i % 3) - 5,
