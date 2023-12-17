@@ -27,8 +27,8 @@ void Button::query_click(int x, int y) {
 
 bool Button::query_hover(int x, int y, sf::RenderWindow & wndw) {
     if(bounds.getGlobalBounds().contains(x, y)) {
-        sprt.setColor(sf::Color(100, 100, 100));
-        bounds.setFillColor(sf::Color(100, 100, 100));
+        sprt.setColor(sf::Color(128, 128, 128));
+        bounds.setFillColor(sf::Color(128, 128, 128));
         return true;
     }
     else {

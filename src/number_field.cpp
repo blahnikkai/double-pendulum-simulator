@@ -28,7 +28,7 @@ void NumberField::query_click(int x, int y) {
 
 bool NumberField::query_hover(int x, int y, sf::RenderWindow & wndw) {
     if(box.getGlobalBounds().contains(x, y)) {
-        box.setFillColor(sf::Color(100, 100, 100));
+        box.setFillColor(sf::Color(128, 128, 128));
         return true;
     }
     else {
